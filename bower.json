@@ -1,0 +1,23 @@
+{
+  "name": "min-require",
+  "main": "min-require.js",
+  "version": "0.1.0",
+  "authors": [
+    "ng-vu <ng-vu@liti.ws>"
+  ],
+  "description": "Minimal require.js implements CommonJS",
+  "keywords": [
+    "require",
+    "minimal",
+    "commonjs"
+  ],
+  "license": "MIT",
+  "homepage": "http://github.com/ng-vu/min-require",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

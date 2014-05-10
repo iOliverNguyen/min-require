@@ -1,0 +1,21 @@
+{
+  "name": "min-require",
+  "version": "0.1.0",
+  "author": "Vu Nguyen <ng-vu@liti.ws>",
+  "description": "Minimal require.js implements CommonJS",
+  "homepage": "http://github.com/ng-vu/min-require",
+  "license": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/ng-vu/min-require/blob/master/LICENSE"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ng-vu/min-require.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^1.9.1"
+  }
+}
