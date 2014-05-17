@@ -1,4 +1,4 @@
-(function(window) {
+;(function(context) {
 
   var modules = {};
   var _modules = {};
@@ -33,13 +33,9 @@
   }
 
   function outputCircular() {
-    s = 'circular:';
-    for (var i in stack) {
-      if (stack[i]) s += ' ' + i;
-    }
-    return s;
+    return 'circular: ' + Object.keys(stack).join(', ');
   }
 
-  window.define = define;
-  window.require = require;
-})(global || window);
+  context.define = define;
+  context.require = require;
+})(typeof window !== 'undefined'? window : global);
