@@ -27,7 +27,7 @@
 
     stack[id] = true;
     _modules[id](require, m, m.exports);
-    stack[id] = false;
+    delete stack[id];
 
     return m.exports;
   }
