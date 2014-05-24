@@ -1,39 +1,27 @@
 ;(function(context) {
-
-  var modules = {};
-  var _modules = {};
-  var stack = {};
+  var modules = {}, funcs = {}, stack = [];
 
   // define(id, function(require, module, exports))
   function define(id, callback) {
     if (typeof id !== 'string' || id === '') throw Error('invalid module id ' + id);
-    if (_modules[id]) throw Error('dupicated module id ' + id);
+    if (funcs[id]) throw Error('dupicated module id ' + id);
     if (typeof callback !== 'function') throw Error('invalid module function');
 
-    _modules[id] = callback;
+    funcs[id] = callback;
   }
 
   // require(id)
   function require(id) {
-    if (!_modules[id]) throw Error('module ' + id + ' is not defined');
-    if (stack[id]) throw Error(outputCircular());
+    if (!funcs[id]) throw Error('module ' + id + ' is not defined');
+    if (stack.indexOf(id) > 0) throw Error('circular: ' + stack.join(', '));
     if (modules[id]) return modules[id].exports;
 
-    var m = modules[id] = {
-      id: id,
-      require: require,
-      exports: {}
-    };
-
-    stack[id] = true;
-    _modules[id](require, m, m.exports);
-    stack[id] = false;
+    var m = modules[id] = { id:id, require:require, exports:{} };
+    stack.push(id);
+    funcs[id](require, m, m.exports);
+    stack.pop();
 
     return m.exports;
-  }
-
-  function outputCircular() {
-    return 'circular: ' + Object.keys(stack).join(', ');
   }
 
   context.define = define;

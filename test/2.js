@@ -35,6 +35,6 @@ function main() {
     require('C');
 
   } catch(e) {
-    expect(e.toString()).contain('C A B');
+    expect(e.toString()).contain('C, A, B');
   }
 }
