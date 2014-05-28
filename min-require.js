@@ -13,7 +13,7 @@
   // require(id)
   function require(id) {
     if (!funcs[id]) throw Error('module ' + id + ' is not defined');
-    if (stack.indexOf(id) > 0) throw Error('circular: ' + stack.join(', '));
+    if (stack.indexOf(id) >= 0) throw Error('circular: ' + stack.join(', '));
     if (modules[id]) return modules[id].exports;
 
     var m = modules[id] = { id:id, require:require, exports:{} };
