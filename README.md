@@ -11,7 +11,7 @@ while NodeJs tries to return uninitialized exports object when resolving circula
 
 **Example:**
 
-```
+```js
 define('foo', function(require, module, exports) {
 
   exports.hello = 'Hello';
@@ -31,7 +31,7 @@ console.log(require('my-module'));   // 'Hello World'
 
 **Example 2:**
 
-```
+```js
 define('A', function(require, module, exports) {
   require('B');
 });
@@ -45,7 +45,7 @@ require('A');   // Error: circular: A, B
 
 ## Using in browser
 
-* Include min-require.js in <script> tag
+* Include min-require.js in &lt;script&gt; tag
 * Define your modules
 * Require at least one module in main script
 * A module must be required (directly or indirectly) from main script in order to run
