@@ -1,11 +1,11 @@
 {
   "name": "min-require",
   "main": "min-require.js",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "authors": [
     "ng-vu <ng-vu@liti.ws>"
   ],
-  "description": "Minimal require.js implements CommonJS",
+  "description": "Minimal imlementation of CommonJS require API",
   "keywords": [
     "require",
     "minimal",
