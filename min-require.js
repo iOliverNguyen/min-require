@@ -1,5 +1,14 @@
-;(function(context) {
-  var modules = {}, funcs = {}, stack = [];
+;
+(function (context) {
+  var modules,
+    funcs,
+    stack;
+
+  function reset() {
+    modules = {};
+    funcs = {};
+    stack = [];
+  }
 
   // define(id, function(require, module, exports))
   function define(id, callback) {
@@ -16,7 +25,7 @@
     if (stack.indexOf(id) >= 0) throw Error('circular: ' + stack.join(', '));
     if (modules[id]) return modules[id].exports;
 
-    var m = modules[id] = { id:id, require:require, exports:{} };
+    var m = modules[id] = { id: id, require: require, exports: {} };
     stack.push(id);
     funcs[id](require, m, m.exports);
     stack.pop();
@@ -24,6 +33,8 @@
     return m.exports;
   }
 
+  reset();
   context.define = define;
   context.require = require;
-})(typeof window !== 'undefined'? window : global);
+  context.reset = reset;
+})(typeof window !== 'undefined' ? window : global);
