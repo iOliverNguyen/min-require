@@ -12,9 +12,9 @@
 
   // define(id, function(require, module, exports))
   function define(id, callback) {
-    if (typeof id !== 'string' || id === '') throw Error('invalid module id ' + id);
-    if (funcs[id]) throw Error('dupicated module id ' + id);
-    if (typeof callback !== 'function') throw Error('invalid module function');
+    if (typeof id !== 'string' || id === '') throw new Error('invalid module id ' + id);
+    if (funcs[id]) throw new Error('dupicated module id ' + id);
+    if (typeof callback !== 'function') throw new Error('invalid module function');
 
     funcs[id] = callback;
   }
@@ -32,8 +32,8 @@
   // require(id, stub)
   function require(id, stub) {
     var m;
-    if (!funcs[id]) throw Error('module ' + id + ' is not defined');
-    if (stack.indexOf(id) >= 0) throw Error('circular: ' + stack.join(', '));
+    if (!funcs[id]) throw new Error('module ' + id + ' is not defined');
+    if (stack.indexOf(id) >= 0) throw new Error('circular: ' + stack.join(', '));
     if (stub) {
       m = { id: id, exports: {} };
       funcs[id](stubRequire(stub), m, m.exports);
