@@ -64,4 +64,33 @@ describe('min-require', function () {
     }).toThrowError("circular: C, A, B");
 
   });
+
+  it('should stub out the dependencies if require is called with stub object', function () {
+    define('AlphaModule', function (require, module) {
+      function getName() {
+        return 'AlphaModule';
+      }
+
+      module.exports = {
+        getName: getName
+      }
+    });
+
+    define('BravoModule', function (require, module) {
+      var alpha = require('AlphaModule');
+      function getName() {
+          return 'BravoModule' + 'On' + alpha.getName();
+      }
+
+      module.exports = {
+        getName: getName
+      }
+    });
+
+    var SUT = require('BravoModule', {
+      AlphaModule: {getName: function () {return 'StubAlphaModule'}}
+    });
+
+    expect(SUT.getName()).toEqual('BravoModuleOnStubAlphaModule');
+  });
 });
