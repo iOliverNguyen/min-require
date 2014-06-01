@@ -146,13 +146,22 @@ Define a module.
 ### require
 
 ```js
-require(id)
+require(id, stub)
 ```
 
-Require a module.
+Require a module. If stub object is specified it will stub out all dependencies using the stub object.
 
 * **Return**: exports object
 * **id** must be defined
+* **stub**: (optional) `{dependency1: {method1: function () {}, method2: function () {}}}`
+
+### reset
+
+```js
+reset()
+```
+
+Forgets about every previously defined module. Useful for testing.
 
 ## License
 
