@@ -82,7 +82,7 @@ define('AlphaModule', function (require, module) {
 
   module.exports = {
     getName: getName
-  }
+  };
 });
 
 define('BravoModule', function (require, module) {
@@ -93,7 +93,7 @@ define('BravoModule', function (require, module) {
 
   module.exports = {
     getName: getName
-  }
+  };
 });
 ```
 
@@ -104,9 +104,8 @@ describe('BravoModule', function () {
       AlphaModule: {getName: function () {return 'StubAlphaModule'}}
     });
     expect(SUT.getName()).toEqual('BravoModuleOnStubAlphaModule');
-  })
-})
-
+  });
+});
 ```
 
 ## Using with Gulp
