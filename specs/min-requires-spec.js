@@ -33,7 +33,21 @@ describe('min-require', function () {
     expect(testValue2).toEqual('B require A');
   });
 
-  it('should throw error on circular dependencies', function () {
+  it('should throw error on circular dependencies (1)', function () {
+    define('A', function (require, module, exports) {
+      require('B');
+    });
+
+    define('B', function (require, module, exports) {
+      require('A');
+    });
+
+    expect(function () {
+      require('A');
+    }).toThrowError('circular: A, B');
+  });
+
+  it('should throw error on circular dependencies (2)', function () {
     define('A', function (require, module, exports) {
       B = require('B');
       C = require('C');
@@ -61,7 +75,7 @@ describe('min-require', function () {
 
     expect(function () {
       require('C');
-    }).toThrowError("circular: C, A, B");
+    }).toThrowError('circular: C, A, B');
 
   });
 
@@ -73,7 +87,7 @@ describe('min-require', function () {
 
       module.exports = {
         getName: getName
-      }
+      };
     });
 
     define('BravoModule', function (require, module) {
@@ -84,11 +98,11 @@ describe('min-require', function () {
 
       module.exports = {
         getName: getName
-      }
+      };
     });
 
     var SUT = require('BravoModule', {
-      AlphaModule: {getName: function () {return 'StubAlphaModule'}}
+      AlphaModule: {getName: function () {return 'StubAlphaModule';}}
     });
 
     expect(SUT.getName()).toEqual('BravoModuleOnStubAlphaModule');

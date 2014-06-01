@@ -26,10 +26,10 @@
         } else {
           return stub[id];
         }
-    }
+    };
   }
 
-  // require(id)
+  // require(id, stub)
   function require(id, stub) {
     var m;
     if (!funcs[id]) throw Error('module ' + id + ' is not defined');

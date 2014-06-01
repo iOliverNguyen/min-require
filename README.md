@@ -1,6 +1,6 @@
 # min-require
 
-> Minimal imlementation of CommonJS require API
+> Minimal implementation of CommonJS require API
 
 ## Introduction
 
@@ -38,7 +38,7 @@ define('A', function(require, module, exports) {
 
 define('B', function(require, module, exports) {
   require('A');
-})
+});
 
 require('A');   // Error: circular: A, B
 ```
@@ -111,7 +111,7 @@ describe('BravoModule', function () {
 ## Using with Gulp
 
 This library was originally created for working with [gulp-wrap-require](https://github.com/ng-vu/gulp-wrap-require).
-You can find the more complete example here: [mithril-boilerplate](https://github.com/ng-vu/mithril-boilerplate).
+You can find the more completed example here: [mithril-boilerplate](https://github.com/ng-vu/mithril-boilerplate).
 
 Sample **gulpfile.js**:
 
@@ -126,6 +126,44 @@ gulp.task('buildAppScripts', function(cb) {
     .pipe(gulp.dest('build/assets')
     .on('end', cb || function(){})
     .on('error', console.log);
+});
+```
+
+**Sample directory tree:**
+
+```
+/
+  build/
+    assets/
+  src/
+    app/
+      alpha/
+        a.js
+      beta/
+        b.js
+      foo.js
+      bar.js
+```
+
+**Result:**
+
+Running `gulp buildAppScripts` on above directory tree will yield **build/assets/main.js**:
+
+```js
+define('alpha/a', function() {
+  // src/app/alpha/a.js
+});
+
+define('beta/b', function() {
+  // src/app/beta/b.js
+});
+
+define('foo', function() {
+  // src/app/foo.js
+});
+
+define('bar', function() {
+  // src/app/bar.js
 });
 ```
 
