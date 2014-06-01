@@ -72,6 +72,42 @@ define('app', function(require, module, exports) {
 require('app');
 ```
 
+## Testing
+
+```js
+define('AlphaModule', function (require, module) {
+  function getName() {
+    return 'AlphaModule';
+  }
+
+  module.exports = {
+    getName: getName
+  };
+});
+
+define('BravoModule', function (require, module) {
+  var alpha = require('AlphaModule');
+  function getName() {
+      return 'BravoModule' + 'On' + alpha.getName();
+  }
+
+  module.exports = {
+    getName: getName
+  };
+});
+```
+
+```js
+describe('BravoModule', function () {
+  it('should be easily tested', function () {
+    var SUT = require('BravoModule', {
+      AlphaModule: {getName: function () {return 'StubAlphaModule'}}
+    });
+    expect(SUT.getName()).toEqual('BravoModuleOnStubAlphaModule');
+  });
+});
+```
+
 ## Using with Gulp
 
 This library was originally created for working with [gulp-wrap-require](https://github.com/ng-vu/gulp-wrap-require).
@@ -110,13 +146,22 @@ Define a module.
 ### require
 
 ```js
-require(id)
+require(id, stub)
 ```
 
-Require a module.
+Require a module. If stub object is specified it will stub out all dependencies using the stub object.
 
 * **Return**: exports object
 * **id** must be defined
+* **stub**: (optional) `{dependency1: {method1: function () {}, method2: function () {}}}`
+
+### reset
+
+```js
+reset()
+```
+
+Forgets about every previously defined module. Useful for testing.
 
 ## License
 
