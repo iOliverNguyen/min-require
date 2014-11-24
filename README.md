@@ -19,7 +19,7 @@ define('foo', function(require, module, exports) {
 
 });
 
-define('my-module', function() {
+define('my-module', function(require, module, exports) {
 
   var foo = require('foo');
   module.exports = foo.hello + ' ' + foo.world;
