@@ -4,10 +4,7 @@
 
 ## Introduction
 
-This tiny library provides a way to organize your client-side scripts in CommonJs style.
-It only implements minimum features that required to work and nothing more.
-It also detects circular dependency and throws error. The behaviour is differ from NodeJs
-while NodeJs tries to return uninitialized exports object when resolving circular dependency.
+This tiny library provides a way to organize your client-side scripts in CommonJs style. It only implements minimum features that required to work and nothing more. It also detects circular dependency and throws error. The behaviour is different from NodeJs while NodeJs tries to return uninitialized exports object when resolving circular dependency.
 
 **Example:**
 
@@ -70,6 +67,20 @@ define('app', function(require, module, exports) {
 });
 
 require('app');
+```
+
+## Using AMD syntax
+
+```js
+define('module1', ['exports'], function(exports) {
+  exports.value = 10;
+});
+
+define('module2', ['module1'], function(module1) {
+  return module1.value * 2;
+})
+
+console.log(require('module2')); // 20
 ```
 
 ## Testing
@@ -169,17 +180,31 @@ define('bar', function() {
 
 ## API
 
-### define
+### define#CJS
 
 ```js
 define(id, callback)
 ```
 
-Define a module.
+Define a module using Simplified CommonJS Wrapper syntax.
 
 * **id** must be string and unique
 * **callback**: `function(require, module, exports)`
 
+
+### define#AMD
+
+```js
+define(id, dependencies, callback)
+```
+
+Define a module using Asynchronous Module Definition syntax.
+
+* **id** must be string and unique
+* **dependencies** must be an array of module names as strings
+* **callback**: `function(module1, module2, ...)` that returns the module interface
+
+The special module `exports` is supported as a dependency to expose the module's interface.
 
 ### require
 
