@@ -76,7 +76,6 @@ describe('min-require', function () {
     expect(function () {
       require('C');
     }).toThrowError('circular: C, A, B');
-
   });
 
   it('should stub out the dependencies if require is called with stub object', function () {
@@ -106,5 +105,34 @@ describe('min-require', function () {
     });
 
     expect(SUT.getName()).toEqual('BravoModuleOnStubAlphaModule');
+  });
+
+  it('should inject dependencies using AMD style', function () {
+    var testValue1,
+        testValue2;
+
+    define('A', ['exports'], function (exports) {
+      exports.A = 'A';
+      exports[10] = 20;
+    });
+
+    define('B', ['A'], function (A) {
+      return 'B require ' + A.A;
+    });
+
+    define('C', ['A', 'B'], function (A, B) {
+      testValue1 = A[10];
+      testValue2 = B;
+    });
+
+    require('C');
+
+    expect(testValue1).toEqual(20);
+    expect(testValue2).toEqual('B require A');
+    
+    expect(require('B')).toEqual('B require A');
+
+    expect(require('A').A).toEqual('A');
+    expect(require('A')[10]).toEqual(20);
   });
 });
